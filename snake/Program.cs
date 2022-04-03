@@ -19,6 +19,11 @@ namespace snake
 			Console.ForegroundColor = ConsoleColor.DarkYellow;
 			walls.Draw();
 
+			Text.WriteText("Пауза", 81, 3);
+			Text.WriteText("(Клик мышью)", 81, 4);
+			Text.WriteText("Продолжить", 81, 6);
+			Text.WriteText("(Нажать стрелочки на клавиатуре)", 81, 7);
+
 			HorizontalLine upline = new HorizontalLine(0, 78, 0, '*');
 			HorizontalLine downline = new HorizontalLine(0, 78, 24, '*');
 			VerticalLine leftline = new VerticalLine(0, 24, 0, '*');
@@ -32,6 +37,10 @@ namespace snake
 			Snake snake = new Snake(p, 4, Direction.RIGHT);
 			snake.Drow();
 
+			Console.ForegroundColor = ConsoleColor.DarkYellow;
+			Text.WriteText("Очки: 0", 81, 1);
+			Score scores = new Score();
+
 			FoodCreator foodCreator = new FoodCreator(80, 25, '$');
 			Point food = foodCreator.CreateFood();
 			food.Draw();
@@ -42,24 +51,32 @@ namespace snake
 				{
 					break;
 				}
+
 				if (snake.Eat(food))
 				{
+					Console.ForegroundColor = ConsoleColor.Yellow;
 					food = foodCreator.CreateFood();
 					food.Draw();
-
+					Console.ForegroundColor = ConsoleColor.Green;
+					scores.Increase();
 				}
 				else
 				{
+					Console.ForegroundColor = ConsoleColor.Green;
 					snake.Move();
 				}
 
-				Thread.Sleep(100);
+				Thread.Sleep(Speed.SnSped(Score.playerScore));
+
 				if (Console.KeyAvailable)
 				{
 					ConsoleKeyInfo key = Console.ReadKey();
 					snake.HandleKey(key.Key);
 				}
 			}
+			GameOver end = new GameOver();
+			end.WriteGameOver();
+			ViewRate.Results();
 		}
 
 	}
