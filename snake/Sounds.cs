@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WMPLib;
 
 
-namespace Snake_framework
+namespace snake
 {
     public class Sounds
     {
