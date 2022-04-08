@@ -32,6 +32,11 @@ namespace snake
 			downline.Drow();
 			leftline.Drow();
 			rightline.Drow();
+			Parametrs settings = new Parametrs();
+			Sounds soundplay = new Sounds(settings.GetResourceFolder());
+			soundplay.Play("title.mp3");
+			Sounds soundeat = new Sounds(settings.GetResourceFolder());
+			Sounds soundlost = new Sounds(settings.GetResourceFolder());
 
 			Point p = new Point(4, 5, '*');
 			Snake snake = new Snake(p, 4, Direction.RIGHT);
@@ -49,11 +54,13 @@ namespace snake
 			{
 				if (walls.IsHit(snake) || snake.IsHitTail())
 				{
+					soundlost.Play("gameover.mp3");
 					break;
 				}
 
 				if (snake.Eat(food))
 				{
+					soundeat.Play("eat.mp3");
 					Console.ForegroundColor = ConsoleColor.Yellow;
 					food = foodCreator.CreateFood();
 					food.Draw();

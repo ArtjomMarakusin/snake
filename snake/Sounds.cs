@@ -30,16 +30,17 @@ namespace snake
             player.settings.setMode("loop", true);
         }
 
-        public void Play(string songName)
+        public void PlayLost()
         {
-            player.URL = pathToMedia + songName + ".mp3";
+            player.URL = pathToMedia + "gameover.mp3";
+            player.settings.volume = 50;
             player.controls.play();
         }
 
         public void PlayEat()
         {
-            player.URL = pathToMedia + "click.mp3";
-            player.settings.volume = 100;
+            player.URL = pathToMedia + "eat.mp3";
+            player.settings.volume = 50;
             player.controls.play();
         }
     }
